@@ -85,5 +85,5 @@ LibraryManagementSystem
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Contact
-For queries or feedback, please contact the project maintainer at [your-email@example.com].
+For queries or feedback, please contact the project maintainer at ayushmannu79@gmail.com.
 
