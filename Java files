@@ -1,0 +1,67 @@
+// complete version of the servlet with improvements:
+package com.librarymanagement;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@WebServlet("/user")
+public class UserServlet extends HttpServlet {
+    private Map<String, String> users = new HashMap<>();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("login".equals(action)) {
+            request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+        } else if ("register".equals(action)) {
+            request.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
+        } else if ("profile".equals(action)) {
+            String username = (String) request.getSession().getAttribute("username");
+            if (username != null) {
+                request.setAttribute("username", username);
+                request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("user?action=login");
+            }
+        } else {
+            response.sendRedirect("user?action=login");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("register".equals(action)) {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            if (!users.containsKey(username)) {
+                users.put(username, password);
+                response.sendRedirect("user?action=login");
+            } else {
+                request.setAttribute("error", "Username already exists!");
+                request.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
+            }
+        } else if ("login".equals(action)) {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            if (users.containsKey(username) && users.get(username).equals(password)) {
+                request.getSession().setAttribute("username", username);
+                response.sendRedirect("user?action=profile");
+            } else {
+                request.setAttribute("error", "Invalid credentials!");
+                request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+            }
+        }
+    }
+}
