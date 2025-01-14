@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>Welcome, ${sessionScope.user.username}!</h1>
+    <p>Email: ${sessionScope.user.email}</p>
+
+    <h3>Your Borrowed Books</h3>
+    <ul>
+        <li>Book 1: Due on 2024-12-10</li>
+        <li>Book 2: Due on 2024-12-15</li>
+    </ul>
+</body>
+</html>

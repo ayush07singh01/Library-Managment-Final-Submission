@@ -1,0 +1,25 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class UserServiceTest {
+    @Test
+    void testRegisterUser() {
+        UserService userService = new UserService();
+        User user = new User("testuser", "test@example.com", "password");
+        assertTrue(userService.register(user));
+    }
+}
+//test DAO operations like saving and retrieving users from the database
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class UserDAOTest {
+    @Test
+    void testSaveUser() {
+        UserDAO userDAO = new UserDAO();
+        User user = new User("testuser", "test@example.com", "password");
+        assertTrue(userDAO.save(user));
+    }
+}
